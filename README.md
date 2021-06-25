@@ -1,5 +1,5 @@
 # myb-celsius-network-transfer
- An AWS Lambda function for transferring crypto from Celsius Network wallets
+ An AWS Lambda function for transferring crypto from [Celsius Network](https://celsius.network/) wallets
 
 This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. 
 
