@@ -1,0 +1,8 @@
+{
+  "CelsiusNetworkTransferFn": {
+    "RUN_MODE": "test",
+    "WITHDRAWAL_ADDRESS": "0x0eFf30A615896cE83718C477E53bAe399c72Db0c",
+    "CELNET_PARTNER_TOKEN": "27ad54f9-3337-ddf5-ac9b-3c3df7623d05",
+    "CELNET_API_KEY": "9af4d838-1781-bacc-b0f9-15e554f8798d"
+  }
+}

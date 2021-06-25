@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  myb-celsius-network-transfer
+
+  Serverless capabilities for managing aspects of a mining business
+
+Resources:
+  # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  CelsiusNetworkTransferFn:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: celsius_network_transfer_function
+      Handler: celsius_network_transfer.app.lambda_handler
+      Runtime: python3.8
+      Timeout: 3
+      Environment:
+        Variables:
+          # If RUN_MODE is 'test', runs in test mode
+          RUN_MODE: "production"
+          WITHDRAWAL_CRYPTO: ETH
+          # Minimum amount of crypto to leave behind after a potential withdrawal
+          # If insufficient funds are available to maintain the minimum, the 
+          # withdrawal will not take place
+          WITHDRAWAL_CRYPTO_LEAVE_MIN: 3.00
+          WITHDRAWAL_ADDRESS: '{{resolve:ssm:/celsius_network/withdrawals/eth/address:1}}' 
+          WITHDRAWAL_USD_EQUIVALENT: 67.00
+          # Details about Celsius Network API keys: https://developers.celsius.network/integration-partner.html
+          CELNET_PARTNER_TOKEN: '{{resolve:ssm:/celsius_network/api_keys/partner_token:1}}' 
+          CELNET_API_KEY: '{{resolve:ssm:/celsius_network/api_keys/withdrawal/key:1}}' 
+      Events:
+        CWSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 0 * * ? *)
+            Name: CelsiusNetworkTransferSchedule
+            Description: execution schedule for transferring crypto from Celsius Network
+            Enabled: True
